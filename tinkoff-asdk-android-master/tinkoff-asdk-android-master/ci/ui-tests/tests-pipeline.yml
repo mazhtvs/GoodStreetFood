@@ -1,0 +1,64 @@
+# Ui автотесты
+include:
+  - local: 'ci/ui-tests/ui-tests-variables.yml'
+  - project: 'mobile-dev-platform/pipelines'
+    ref: 'v2'
+    file:
+      - 'universal/android/jobs/ui_tests.yml'
+      - 'android/gradle.yml'
+      - 'common/allure.yml'
+
+stages:
+  - automation:stop-gradle
+  - automation:build
+  - automation:ui-test
+  - automation:allure-upload
+
+# Сборка апк для автотестов
+build-app-for-autotests:
+  stage: automation:build
+  image: docker-hosted.artifactory.tcsbank.ru/mobile-dev-platform/android-adoptium-jdk17-platform33
+  extends:
+    - .gradle-job
+  variables:
+    GIT_DEPTH: 1
+    GRADLE_TASKS: "sample:assembleDebug sample:assembleDebugAndroidTest"
+    GRADLE_JVM_ARGS: "org.gradle.jvmargs=-XX:+IgnoreUnrecognizedVMOptions"
+  artifacts:
+    when: always
+    paths:
+      - 'sample/build/outputs/'
+      - '**/build/reports/'
+      - '**/allure-results/'
+
+# UI тесты на регресс
+ui-tests-on-regress-for-app:
+  stage: automation:ui-test
+  extends:
+    - .ui-tests-variables
+    - .ui-tests-droidherd
+  variables:
+    GIT_STRATEGY: none
+    TEST_CLASS: ".*Tests"
+    APK_FILE: sample/build/outputs/apk/debug/*.apk
+    TEST_APK_FILE: sample/build/outputs/apk/androidTest/debug/*-androidTest.apk
+    FARM_EMULATORS: android-30:3
+  needs:
+    - build-app-for-autotests
+  allow_failure: true
+
+upload-allure-report-for-regress:
+  stage: automation:allure-upload
+  extends: .upload-allure-results-dp
+  needs:
+    - ui-tests-on-regress-for-app
+  variables:
+    GIT_DEPTH: 1
+    ALLURE_LAUNCH_NAME: "ANDROID Regression Tests [JOB_ID = ${CI_PIPELINE_ID}]"
+    ALLURE_RESULTS_DIR: "build/droidherd/allure-results/"
+    ALLURE_UPLOAD_RESULT_FILENAME: "allure.txt"
+  artifacts:
+    paths:
+      - 'app/build/outputs/logs'
+      - '**/allure-results/'
+      - 'allure.txt'

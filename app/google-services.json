@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "786021731124",
+    "firebase_url": "https://good-street-food-323e6-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "good-street-food-323e6",
+    "storage_bucket": "good-street-food-323e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786021731124:android:e60f1fd932cd7ae320b361",
+        "android_client_info": {
+          "package_name": "com.pizza.giros.burger.goodstreetfood"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATpnoSChGIpe9cDwqnjH69q5vDYmuarw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

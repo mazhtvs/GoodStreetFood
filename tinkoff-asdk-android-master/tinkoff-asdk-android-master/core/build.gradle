@@ -1,0 +1,88 @@
+apply plugin: 'kotlin'
+apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'ru.tinkoff.mobile.core-plugin'
+apply from: '../gradle/versions.gradle'
+apply from: '../gradle/publish.gradle'
+
+repositories {
+    maven { url 'https://nexus.tcsbank.ru/repository/mvn-mobile/' }
+    maven { url 'https://nexus.tcsbank.ru/repository/gradle-plugins/' }
+    maven { url 'https://nexus.tcsbank.ru/repository/mvn-maven-proxy/' }
+    maven { url 'https://nexus.tcsbank.ru/repository/mvn-proxy-google-release/' }
+    maven { url 'https://nexus.tcsbank.ru/repository/mvn-proxy-jcenter-release/' }
+}
+
+tasks.dokkaHtmlPartial.configure {
+    outputDirectory = file("../build/dokka/core")
+}
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    testImplementation 'junit:junit:4.13'
+}
+
+buildscript {
+    repositories {
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-mobile/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/gradle-plugins/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-maven-proxy/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-proxy-google-release/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-proxy-jcenter-release/' }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+coreCommon {
+
+    /**
+     * Опциональный флаг для включения/выключения публикации модуля в корпоративный репозиторий, по-умолчанию = true
+     * Логин и пароль для доступа в репозиторий будут взяты из системных переменных
+     * PRIVATE_NEXUS_USER и PRIVATE_NEXUS_PASSWORD
+     */
+    mavenPublishEnabled = false
+
+    /**
+     * Опциональный флаг для включения/выключения detekt, по-умолчанию = false
+     * При использовании может потребоваться увеличить размер -XX:MaxMetaspaceSize
+     * см. https://github.com/Kotlin/dokka/wiki/faq#dokka-throws-javalangoutofmemoryerror-metaspace
+     */
+    detektEnabled = false
+    detektConfig = rootProject.files("gradle/config/detekt.yml")
+
+    /**
+     * Опциональный параметр для включения/выключения таски проверки/обновление новых версий core-библиотек
+     */
+    versionsEnabled = true
+
+    /**
+     * Опциональный параметр для включения/выключения таски поиска устаревших android-ресусров,
+     * помеченных в стиле AOSP
+     */
+    collectDeprecatedResourcesEnabled = false
+
+    /**
+     * Опциональный параметр для указания файла, где будут записаны найденные устаревшие ресурсы модуля,
+     * для использования в линтере (TBD)
+     * по-умолчанию = file("$buildDir/deprecated-resources/deprecated.txt")
+     */
+    collectDeprecatedResourcesOutput = file("$buildDir/deprecated-resources/deprecated.txt")
+}
+

@@ -1,0 +1,26 @@
+include:
+  - local: '/ci/ui-tests/trigger-tests.yml'
+  - project: 'mobile-dev-platform/pipelines'
+    ref: 'acp-v2'
+    file:
+      - '/android/core/base.yml'
+
+detekt:
+  rules:
+    - when: never
+
+release:snapshot:
+  rules:
+    - when: never
+
+release:main:
+  rules:
+    - when: never
+
+allure:upload:unit-tests-results:
+  rules:
+    - when: never
+
+prepare:unit:allure:data:
+  rules:
+    - when: never

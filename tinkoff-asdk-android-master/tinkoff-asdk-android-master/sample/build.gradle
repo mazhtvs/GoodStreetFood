@@ -1,0 +1,128 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'ru.tinkoff.mobile.core-demo-plugin'
+apply from: rootProject.file('gradle/versions.gradle')
+
+coreDemo {
+
+    /**
+     * Опциональный параметр, название переменной окружения из которой нужно взять versionCode,
+     * по-умолчанию = "COMPONENT_VERSION_CODE"
+     */
+    versionCodePropertyName = "ENV_VERSION_CODE"
+
+    /**
+     * Опциональный параметр, Int!, значение versionCode которое нужно использовать в случае
+     * отсутствия переменной окружения, по-умолчанию = 1
+     */
+    defaultVersionCode = Integer.valueOf(VERSION_CODE)
+}
+
+android {
+    namespace 'ru.tinkoff.acquiring.sample'
+
+    compileSdkVersion rootProject.compileSdk
+    buildToolsVersion rootProject.buildTools
+
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+            storePassword 'android'
+            keyAlias 'androidDebugKey'
+            keyPassword 'android'
+        }
+    }
+
+    defaultConfig {
+        applicationId "ru.tinkoff.acquiring.sample"
+        minSdkVersion rootProject.minSdk
+        targetSdkVersion rootProject.compileSdk
+        versionCode coreDemo.getVersionCode()
+        versionName VERSION_NAME
+        manifestPlaceholders = [
+                YANDEX_CLIENT_ID: "9dc6814e39204c638222dede9561ea6f"
+        ]
+        testInstrumentationRunner "io.qameta.allure.android.runners.AllureAndroidJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        unitTests.returnDefaultValues = true
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+    
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    lint {
+        disable 'NetworkSecurityConfig'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+
+    implementation "androidx.preference:preference:$preferenceVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "com.google.android.material:material:${materialVersion}"
+    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:${mokitoKotlinVersion}"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.7.0"
+    androidTestImplementation "org.mockito.kotlin:mockito-kotlin:${mokitoKotlinVersion}"
+    androidTestImplementation "org.mockito:mockito-android:${mokitoKotlinVersion}"
+    androidTestImplementation "androidx.test:runner:$androidxRunnerVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.test:core:$androidxTestVersion"
+    androidTestImplementation "androidx.test:monitor:$androidxTestMonitorVersion"
+    androidTestImplementation "ru.tinkoff.core.testing:core-testing-kaspresso:$coreTestingVersion"
+    androidTestImplementation "ru.tinkoff.core.testing:core-testing-allure:$coreTestingVersion"
+    androidTestImplementation "ru.tinkoff.core.testing:core-testing-mock:$coreTestingVersion"
+    androidTestImplementation "ru.tinkoff.core.testing:core-testing-utils:$coreTestingVersion"
+    androidTestImplementation "ru.tinkoff.core.testing:core-testing-rule:$coreTestingVersion"
+    androidTestImplementation "org.apache.httpcomponents:httpclient-android:$apacheHttpclientVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunit"
+    debugImplementation "androidx.tracing:tracing:$androidxTracingVersion"
+    androidTestImplementation "androidx.test:runner:$androidxTestVersion"
+    androidTestUtil "androidx.test:orchestrator:$androidxTestOrchestrator"
+
+    implementation project(':ui')
+    implementation project(':yandexpay')
+    implementation project(':cardio')
+    implementation project(':threeds-sdk')
+    implementation project(':threeds-wrapper')
+}

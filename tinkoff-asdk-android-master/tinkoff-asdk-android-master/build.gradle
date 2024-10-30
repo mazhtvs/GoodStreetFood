@@ -1,0 +1,60 @@
+buildscript {
+    apply from: 'gradle/versions.gradle'
+
+    repositories {
+        maven { url 'https://nexus.tcsbank.ru/repository/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-mobile/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/gradle-plugins/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-maven-proxy/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-proxy-google-release/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-proxy-jcenter-release/' }
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:${gradlePluginVersion}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
+        classpath "ru.tinkoff.core.gradle:library:$coreGPV"
+        classpath "ru.tinkoff.core.gradle:demo:$coreDemoGPV"
+    }
+}
+
+//plugins {
+//    id 'org.ajoberstar.grgit' version '5.0.0'
+//}
+
+apply plugin: 'kotlin'
+apply plugin: 'org.jetbrains.dokka'
+apply from: 'gradle/versions.gradle'
+
+allprojects {
+    repositories {
+        maven { url 'https://nexus.tcsbank.ru/repository/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-mobile/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/gradle-plugins/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-maven-proxy/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-proxy-google-release/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-proxy-jcenter-release/' }
+        maven { url 'https://nexus.tcsbank.ru/repository/mvn-proxy-qameta/' }
+
+        tasks.withType(Javadoc) {
+            options.addStringOption('encoding', 'UTF-8')
+        }
+    }
+}
+
+//tasks.register("realeaseNotes") {
+//    doLast {
+//        def branch = grgit.branch.current().fullName
+//        def log = grgit
+//                .log { range branch, diffWithOrigin }
+//                .findAll { !it.shortMessage.startsWith("Merge") }
+//                .collect { it.shortMessage }
+//                .join("\n\n")
+//        print log
+//    }
+//}
+dokkaHtmlMultiModule.configure {
+    outputDirectory.set(new File("$buildDir/dokka"))
+}

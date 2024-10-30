@@ -1,0 +1,21 @@
+maintainers:
+  count: 1
+  groups:
+    - apw-mbpay-android
+  default_reviewers:
+    users:
+      - 'v.budnitskiy@tinkoff.ru'
+      - 's.y.biryukov@tinkoff.ru'
+
+qa:
+  count: 1
+  groups:
+    - apw-mbpay-qa
+  default_reviewers:
+    users:
+      - 'g.glushkov@tinkoff.ru'
+      - 'a.i.osipov@tinkoff.ru'
+      - 'al.v.ponomareva@tinkoff.ru'
+  files:
+    - ".*\\/src\\/androidTest\\/.*"
+    - ".*\\/src\\/test\\/.*"

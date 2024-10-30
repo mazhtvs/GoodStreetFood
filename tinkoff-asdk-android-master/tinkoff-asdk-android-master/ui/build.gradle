@@ -1,0 +1,132 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'ru.tinkoff.mobile.core-plugin'
+apply from: rootProject.file('gradle/versions.gradle')
+apply from: '../gradle/publish.gradle'
+
+android {
+    namespace 'ru.tinkoff.acquiring.sdk'
+
+    compileSdkVersion rootProject.compileSdk
+    buildToolsVersion rootProject.buildTools
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdk
+        targetSdkVersion rootProject.targetSdk
+        buildConfigField("String", "ASDK_VERSION_NAME", "\"$VERSION_NAME\"")
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+
+    }
+
+    lint {
+        disable 'VectorRaster', 'UseRequireDrawableLoadingForDrawables', 'ObsoleteSdkInt', 'UnusedResources', 'IconDipSize', 'IconLocation'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+tasks.dokkaHtmlPartial.configure {
+    outputDirectory = file("../build/dokka/ui")
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleExtensionsVersion"
+    implementation "ru.tinkoff.core.components.nfc:nfc:$coreNfcVersion"
+    implementation "ru.tinkoff.decoro:decoro:$decoroVersion"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+    api("com.google.android.gms:play-services-wallet:$googleWalletVersion")
+    api project(':core')
+
+    implementation project(':localization')
+    implementation project(':threeds-sdk')
+    implementation project(':threeds-wrapper')
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
+    implementation "androidx.security:security-crypto:${cryptoVersion}"
+
+    // threeds dependencies
+    implementation "androidx.appcompat:appcompat:${appCompatVersion}"
+    implementation "androidx.fragment:fragment-ktx:${fragmentKtxVersion}"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${lifecycleRuntimeVersion}"
+    implementation "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.nimbusds:nimbus-jose-jwt:${nimbusVersion}"
+    implementation "org.bouncycastle:bcprov-jdk15on:${bouncyCastleVersion}"
+    implementation "jp.wasabeef:blurry:${blurryVersion}"
+    implementation "com.scottyab:rootbeer-lib:${rootBeerVersion}"
+    implementation "androidx.recyclerview:recyclerview:${recyclerviewVersion}"
+    implementation "com.google.android.material:material:${materialVersion}"
+
+    testImplementation 'junit:junit:4.13'
+    testImplementation "org.mockito.kotlin:mockito-kotlin:${mokitoKotlinVersion}"
+    testImplementation "org.mockito:mockito-inline:${mokitoInlineVersion}"
+    testImplementation "io.mockk:mockk:${mockkVersion}"
+    testImplementation "app.cash.turbine:turbine:${turbineVersion}"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+coreCommon {
+
+    /**
+     * Опциональный флаг для включения/выключения публикации модуля в корпоративный репозиторий, по-умолчанию = true
+     * Логин и пароль для доступа в репозиторий будут взяты из системных переменных
+     * PRIVATE_NEXUS_USER и PRIVATE_NEXUS_PASSWORD
+     */
+    mavenPublishEnabled = false
+
+    /**
+     * Опциональный флаг для включения/выключения detekt, по-умолчанию = false
+     * При использовании может потребоваться увеличить размер -XX:MaxMetaspaceSize
+     * см. https://github.com/Kotlin/dokka/wiki/faq#dokka-throws-javalangoutofmemoryerror-metaspace
+     */
+    detektEnabled = false
+    detektConfig = rootProject.files("gradle/config/detekt.yml")
+
+    /**
+     * Опциональный параметр для включения/выключения таски проверки/обновление новых версий core-библиотек
+     */
+    versionsEnabled = true
+
+    /**
+     * Опциональный параметр для включения/выключения таски поиска устаревших android-ресусров,
+     * помеченных в стиле AOSP
+     */
+    collectDeprecatedResourcesEnabled = false
+
+    /**
+     * Опциональный параметр для указания файла, где будут записаны найденные устаревшие ресурсы модуля,
+     * для использования в линтере (TBD)
+     * по-умолчанию = file("$buildDir/deprecated-resources/deprecated.txt")
+     */
+    collectDeprecatedResourcesOutput = file("$buildDir/deprecated-resources/deprecated.txt")
+}

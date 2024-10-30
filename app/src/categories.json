@@ -1,0 +1,176 @@
+{
+  "categories": {
+    "Шаурма": [
+      {
+        "title": "Шаурма GOOD",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fshwrm.jpg?alt=media&token=your-token",
+        "description": "Лаваш, дзадзыки, соус пири-пири, курица, салат, коул-слоу, картофель фри, томаты",
+        "fee": 179
+      },
+      {
+        "title": "Шаурма Сырный Ранч",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Franch.jpg?alt=media&token=your-token",
+        "description": "Лаваш, сырный соус, лук маринованный, курица, картофель фри, томаты",
+        "fee": 199
+      },
+      {
+        "title": "Шаурма Свин Чили с халапенью",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fsvin.jpg?alt=media&token=your-token",
+        "description": "Лаваш, соус халапенью, салат коул-слоу, свинина, картофель фри, томаты",
+        "fee": 219
+      },
+      {
+        "title": "Шаурма Дон Креветон",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fdon.jpg?alt=media&token=your-token",
+        "description": "Лаваш, креветки тигровые, кешью, майонез, картофель фри, огурцы, лист салата, сладкий чили",
+        "fee": 269
+      }
+    ],
+    "Бургеры": [
+      {
+        "title": "Бургер Форсаж",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fburger.jpg?alt=media&token=your-token",
+        "description": "Булочка бриошь, говяжья котлета, томаты, красный лук, лист салата, сыр гауда, огурцы маринованные, кубанская аджика, кетчуп",
+        "fee": 249
+      },
+      {
+        "title": "Стрипс Бургер",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fstripsburger.jpg?alt=media&token=your-token",
+        "description": "Булочка бриошь, стрипсы куриные, томаты, сыр гауда, лист салата, кетчуп, огурцы маринованные, кубанская аджика",
+        "fee": 199
+      }
+    ],
+    "Хот-дог": [
+      {
+        "title": "Хот-Дог BBQ",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fxodog.jpg?alt=media&token=your-token",
+        "description": "Булочка, сосиска, кетчуп, соус BBQ, томаты, маринованные огурцы, криспи лук",
+        "fee": 109
+      },
+      {
+        "title": "Хот-Дог по Чикагски",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fchicag.jpg?alt=media&token=your-token",
+        "description": "Булочка, сосиска, салат коул-слоу, томаты, лук, красный, халапенью, горчица, соус BBQ",
+        "fee": 109
+      }
+    ],
+    "Гирос": [
+      {
+        "title": "Гирос Слоу",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fgiros_slow.jpg?alt=media&token=your-token",
+        "description": "Лепешка, курица, салат коул-слоу, томаты, картофель фри, зелень, соус пири-пири",
+        "fee": 219
+      },
+      {
+        "title": "Гирос Сырный Грек",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fgiros.jpg?alt=media&token=your-token",
+        "description": "Лепешка, свинина, картофель фри, капуста маринованная, соус чесночный ранч, рататуй",
+        "fee": 239
+      }
+    ],
+    "Снеки": [
+      {
+        "title": "Стрипсы куриные",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fstrips.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 119
+      },
+      {
+        "title": "Наггетсы куриные",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fnagets.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 79
+      },
+      {
+        "title": "Сырные палочки",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fsir.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 139
+      }
+    ],
+    "Добавки": [
+      {
+        "title": "Курица",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fchiken.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 79
+      },
+      {
+        "title": "Свинина",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fsvinina.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 99
+      },
+      {
+        "title": "Халапенью\\Криспи лук",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fkrispi.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 39
+      }
+    ],
+    "Соусы": [
+      {
+        "title": "Пири-пири",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fpiri_piri.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 1
+      },
+      {
+        "title": "Дзадзыки",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fdza.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 59
+      },
+      {
+        "title": "Халапенью",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fholo.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 59
+      },
+      {
+        "title": "Сырный",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fsirniy.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 59
+      },
+      {
+        "title": "Кубанская аджика",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fadzhika.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 59
+      },
+      {
+        "title": "Чесночный ранч",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Fchensok.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 59
+      }
+    ],
+    "Фри": [
+      {
+        "title": "Картофель Фри Карбонара",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Ffri_carbonara.jpg?alt=media&token=your-token",
+        "description": "Картофель фри двойной обжарки, соус карбонара",
+        "fee": 209
+      },
+      {
+        "title": "Картофель Фри По-Баварски",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Ffri_bov.jpg?alt=media&token=your-token",
+        "description": "Картофель фри двойной обжарки, соус баварские колбаски",
+        "fee": 219
+      },
+      {
+        "title": "Картофель Фри с Креветками",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Ffri_krev.jpg?alt=media&token=your-token",
+        "description": "Картофель фри двойной обжарки, Филе тигровых креветок, сливки, томаты, перец болгарский, томаты, кетчуп",
+        "fee": 249
+      },
+      {
+        "title": "Картофель фри 150г",
+        "pic": "https://firebasestorage.googleapis.com/v0/b/your-app-id.appspot.com/o/images%2Ffrishka.jpg?alt=media&token=your-token",
+        "description": "",
+        "fee": 149
+      }
+    ]
+  }
+}

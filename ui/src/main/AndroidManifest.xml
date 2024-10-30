@@ -1,0 +1,122 @@
+<!--
+  ~ Copyright © 2020 Tinkoff Bank
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="*" android:host="qr.nspk.ru" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data
+                android:host="tinkoff.ru"
+                android:scheme="https" />
+        </intent>
+
+        <package android:name="ru.nspk.mirpay" />
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data
+                android:host="mirpay.nspk.ru"
+                android:scheme="https" />
+        </intent>
+    </queries>
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="false"
+        android:supportsRtl="true">
+
+        <activity
+            android:name=".ui.activities.YandexPaymentActivity"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AcquiringTheme"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".ui.activities.AttachCardActivity"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AcquiringTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".cardscanners.ui.AsdkNfcScanActivity"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AcquiringNfcTheme" />
+
+        <activity
+            android:name=".ui.activities.QrCodeActivity"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AcquiringTheme" />
+
+        <activity
+            android:name=".ui.activities.ThreeDsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AcquiringNewTheme" />
+
+        <activity
+            android:name=".redesign.cards.list.ui.CardsListActivity"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AcquiringTheme.Base" />
+
+        <activity
+            android:name=".redesign.sbp.ui.SbpPaymentActivity"
+            android:screenOrientation="unspecified"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AcquiringTheme.Base" />
+
+        <activity
+            android:name=".redesign.sbp.ui.SbpNoBanksStubActivity"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AcquiringTheme.Base" />
+
+        <activity
+            android:name=".redesign.payment.ui.PaymentByCardActivity"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            android:theme="@style/AcquiringTheme.Base" />
+
+        <activity
+            android:name=".redesign.mainform.ui.MainPaymentFormActivity"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            android:theme="@style/AcquiringNewTheme" />
+
+        <activity android:name=".redesign.recurrent.ui.RecurrentPaymentActivity"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            android:theme="@style/AcquiringNewTheme" />
+
+        <activity android:name=".redesign.tpay.ui.TpayFlowActivity"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AcquiringNewTheme" />
+
+        <activity android:name=".redesign.mirpay.ui.MirPayFlowActivity"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AcquiringNewTheme" />
+
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
+
+    </application>
+</manifest>

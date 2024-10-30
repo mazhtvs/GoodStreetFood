@@ -1,0 +1,112 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+apply plugin: 'ru.tinkoff.mobile.core-plugin'
+apply from: rootProject.file('gradle/versions.gradle')
+
+def getReleaseRepositoryUrl() {
+    return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
+            : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
+
+def getSnapshotRepositoryUrl() {
+    return hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
+            : "https://oss.sonatype.org/content/repositories/snapshots/"
+}
+
+def getRepositoryUsername() {
+    return hasProperty('ossrhUsername') ? ossrhUsername : ''
+}
+
+def getRepositoryPassword() {
+    return hasProperty('ossrhPassword') ? ossrhPassword : ''
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId GROUP
+                version versionName
+                artifactId "threeds-sdk"
+                artifact("emv-3ds-sdk-release.aar")
+                pom {
+                    name = "threeds-sdk"
+                    packaging = "aar"
+                    description = POM_DESCRIPTION
+                    url = POM_URL
+                    scm {
+                        url = POM_SCM_URL
+                        connection = POM_SCM_CONNECTION
+                        developerConnection = POM_SCM_DEV_CONNECTION
+                    }
+                    licenses {
+                        license {
+                            name = POM_LICENCE_NAME
+                            url = POM_LICENCE_URL
+                            distribution = POM_LICENCE_DIST
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = POM_DEVELOPER_ID
+                            name = POM_DEVELOPER_NAME
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                url isRelease ? getReleaseRepositoryUrl() : getSnapshotRepositoryUrl()
+                credentials {
+                    username = getRepositoryUsername()
+                    password = getRepositoryPassword()
+                }
+            }
+        }
+    }
+
+    signing {
+        required { isRelease }
+        sign publishing.publications.release
+    }
+}
+
+configurations.maybeCreate("default")
+artifacts.add("default", file('emv-3ds-sdk-release.aar'))
+
+coreCommon {
+
+    /**
+     * Опциональный флаг для включения/выключения публикации модуля в корпоративный репозиторий, по-умолчанию = true
+     * Логин и пароль для доступа в репозиторий будут взяты из системных переменных
+     * PRIVATE_NEXUS_USER и PRIVATE_NEXUS_PASSWORD
+     */
+    mavenPublishEnabled = false
+
+    /**
+     * Опциональный флаг для включения/выключения detekt, по-умолчанию = false
+     * При использовании может потребоваться увеличить размер -XX:MaxMetaspaceSize
+     * см. https://github.com/Kotlin/dokka/wiki/faq#dokka-throws-javalangoutofmemoryerror-metaspace
+     */
+    detektEnabled = false
+    detektConfig = rootProject.files("gradle/config/detekt.yml")
+
+    /**
+     * Опциональный параметр для включения/выключения таски проверки/обновление новых версий core-библиотек
+     */
+    versionsEnabled = true
+
+    /**
+     * Опциональный параметр для включения/выключения таски поиска устаревших android-ресусров,
+     * помеченных в стиле AOSP
+     */
+    collectDeprecatedResourcesEnabled = false
+
+    /**
+     * Опциональный параметр для указания файла, где будут записаны найденные устаревшие ресурсы модуля,
+     * для использования в линтере (TBD)
+     * по-умолчанию = file("$buildDir/deprecated-resources/deprecated.txt")
+     */
+    collectDeprecatedResourcesOutput = file("$buildDir/deprecated-resources/deprecated.txt")
+}

@@ -1,0 +1,6 @@
+trigger-tests-pipeline:
+  stage: .pre
+  rules:
+    - if: $UI_TESTS == "true"
+  trigger:
+    include: ci/ui-tests/tests-pipeline.yml

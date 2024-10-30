@@ -1,0 +1,8 @@
+include ':sample',
+        ':core',
+        ':cardio',
+        ':ui',
+        ':threeds-sdk',
+        ':threeds-wrapper',
+        ':yandexpay',
+        ':localization'

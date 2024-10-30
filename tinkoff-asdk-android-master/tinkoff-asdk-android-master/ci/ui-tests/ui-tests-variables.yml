@@ -1,0 +1,13 @@
+# Переменные для ui тестов
+.ui-tests-variables:
+  variables:
+    ANDROID_IMAGE_SDK: docker-hosted.artifactory.tcsbank.ru/mobile-dev-platform/android-adoptium-jdk17-platform33
+    APK_FILE: sample/build/outputs/apk/debug/*.apk
+    TEST_APK_FILE: sample/build/outputs/apk/androidTest/debug/*-androidTest.apk
+    FARM_EMULATORS: android-30:3
+    FARM_API_VERSION: v2
+    OUTPUT_DIR: fork
+    TEST_PACKAGE: tests
+    RETRY_PER_TEST: 2
+    TOTAL_RETRIES: 100
+    TEST_TIMEOUT: 600000
